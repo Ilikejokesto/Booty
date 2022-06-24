@@ -81,9 +81,14 @@ LegitMain:AddBind({text = "Other keybind", flag = "other", nomouse = true, key =
 end});
 
 local LegitSecond = LegitColunm1:AddSection("Other")
+
 LegitSecond:AddSlider({text = "HandHitbox", min = 1, max = 6, float = 0.1, value = 1.13, suffix = "°", callback = function(s)
 	game:GetService("Workspace")[game.Players.LocalPlayer.Name].RightHand.Size = Vector3.new(s, s, s)
     game:GetService("Workspace")[game.Players.LocalPlayer.Name].LeftHand.Size = Vector3.new(s, s, s)
+end});
+LegitSecond:AddButton({text = "Normal hands", callback = function()
+    game:GetService("Workspace")[game.Players.LocalPlayer.Name].RightHand.Size = Vector3.new(0.675094, 1.16793, 0.724743)
+    game:GetService("Workspace")[game.Players.LocalPlayer.Name].LeftHand.Size = Vector3.new(0.675094, 1.16793, 0.724743)
 end});
 LegitSecond:AddBox({text = "Change name", skipflag = true, callback = function(value)
     for i,v in ipairs(game:GetService("Workspace").NameUIFolder:GetDescendants()) do
