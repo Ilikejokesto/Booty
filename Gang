@@ -1,43 +1,25 @@
+loadstring(game:HttpGet('https://pastebin.com/raw/WJ6Bg3zE'))()
 
-local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/GreenDeno/Venyx-UI-Library/main/source.lua"))()
-local venyx = library.new("WrldHub", 5013109572)
+-- [Legit Tab UI] ------------------------------------------------------------------------------------------------------------------------------------------------------------
+local LegitTab = library:AddTab("Main"); 
+local LegitColunm1 = LegitTab:AddColumn();
+local LegitMain = LegitColunm1:AddSection("Autotiming")
 
--- themes
-local themes = {
-Background = Color3.fromRGB(24, 24, 24),
-Glow = Color3.fromRGB(0, 0, 0),
-Accent = Color3.fromRGB(10, 10, 10),
-LightContrast = Color3.fromRGB(20, 20, 20),
-DarkContrast = Color3.fromRGB(14, 14, 14),  
-TextColor = Color3.fromRGB(255, 255, 255)
-}
-
--- first page
-local page = venyx:addPage("Main", 5012544693)
-local section1 = page:addSection("AutoTime")
-local section2 = page:addSection("Old autotime")
-local section10 = page:addSection("Other")
-
-section1:addSlider("Ping Timing", 50, 0, 250, function(s)
-    getgenv().Time = s
-end)
-
-section1:addButton("AutoShoot", function()
+LegitMain:AddDivider("Ping based autotime");
+LegitMain:AddSlider({text = "Timing", min = 0, max = 300, float = 0.1, value = 80, callback = function(pingtiming)
+	getgenv().Time = pingtiming
+end});
+LegitMain:AddButton({text = "Autotiming", callback = function()
 	getgenv().ActivationKeybind = Enum.KeyCode.E
 	
 	
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/BootBandit/Rb-world-4/main/test", true))()
-end)
-
-local selectedtime1;
-local selectedtime2;
-local selectedtime3;
-
-section2:addTextbox("Shooting AutoTime adjust", " about 0.86", function(txt, focusLost)
-    selectedtime1 = (txt)
-end)
-
-section2:addKeybind("Autoshoot", Enum.KeyCode.Clear, function()
+end});
+LegitMain:AddDivider("old autotime");
+LegitMain:AddSlider({text = "Shooting Timing", min = 0.10, max = 1, float = 0.01, value = 0.85, suffix = "°", callback = function(txt)
+	selectedtime1 = (txt)
+end});
+LegitMain:AddBind({text = "Shooting keybind", flag = "Shooting", nomouse = true, key = "End", callback = function()
     time = (selectedtime1)
     
     local args = {
@@ -54,13 +36,11 @@ section2:addKeybind("Autoshoot", Enum.KeyCode.Clear, function()
     }
     
     game:GetService("ReplicatedStorage").GameEvents.ClientAction:FireServer(unpack(args))
-end)
-
-section2:addTextbox("Lays AutoTime adjust", " about 0.75", function(txt, focusLost)
-    selectedtime2 = (txt)
-end)
-
-section2:addKeybind("Autoshoot", Enum.KeyCode.Clear, function()
+end});
+LegitMain:AddSlider({text = "Lays Timing", min = 0.10, max = 1, float = 0.01, value = 0.75, suffix = "°", callback = function(txt)
+	selectedtime2 = (txt)
+end});
+LegitMain:AddBind({text = "Lays keybind", flag = "Lays", nomouse = true, key = "End", callback = function()
     time = (selectedtime2)
     
     local args = {
@@ -77,13 +57,11 @@ section2:addKeybind("Autoshoot", Enum.KeyCode.Clear, function()
     }
     
     game:GetService("ReplicatedStorage").GameEvents.ClientAction:FireServer(unpack(args))
-end)
-
-section2:addTextbox("Other AutoTime adjust", "anything u want", function(txt, focusLost)
-    selectedtime3 = (txt)
-end)
-
-section2:addKeybind("Autoshoot", Enum.KeyCode.Clear, function()
+end});
+LegitMain:AddSlider({text = "Other Timing", min = 0.10, max = 1.5, float = 0.01, value = 0, suffix = "°", callback = function(txt)
+	selectedtime3 = (txt)
+end});
+LegitMain:AddBind({text = "Other keybind", flag = "other", nomouse = true, key = "End", callback = function()
     time = (selectedtime3)
     
     local args = {
@@ -100,39 +78,40 @@ section2:addKeybind("Autoshoot", Enum.KeyCode.Clear, function()
     }
     
     game:GetService("ReplicatedStorage").GameEvents.ClientAction:FireServer(unpack(args))
-end)
+end});
 
-section10:addTextbox("Hand hitbox", "", function(s, focusLost)
-    game:GetService("Workspace")[game.Players.LocalPlayer.Name].RightHand.Size = Vector3.new(s, s, s)
+local LegitSecond = LegitColunm1:AddSection("Other")
+LegitSecond:AddSlider({text = "HandHitbox", min = 1, max = 6, float = 0.1, value = 1.13, suffix = "°", callback = function(s)
+	game:GetService("Workspace")[game.Players.LocalPlayer.Name].RightHand.Size = Vector3.new(s, s, s)
     game:GetService("Workspace")[game.Players.LocalPlayer.Name].LeftHand.Size = Vector3.new(s, s, s)
-end)
-
-section10:addTextbox("Change name", "", function(value, focusLost)
+end});
+LegitSecond:AddBox({text = "Change name", skipflag = true, callback = function(value)
     for i,v in ipairs(game:GetService("Workspace").NameUIFolder:GetDescendants()) do
         if v:IsA("TextLabel") then
             v.Text = (value)
         end
     end
-end)
+end});
+LegitSecond:AddBox({text = "Fov", skipflag = true, callback = function(value)
+	workspace.CurrentCamera.FieldOfView = (value)
+end});
 
-section10:addTextbox("Fov unlocker", "", function(value, focusLost)
-    workspace.CurrentCamera.FieldOfView = (value)
-end)
+-- [Rage Tab UI] ------------------------------------------------------------------------------------------------------------------------------------------------------------
+local RageTab = library:AddTab("Dribbles"); 
+local RageColunm1 = RageTab:AddColumn();
+local RageMain = RageColunm1:AddSection("Auto Wall")
 
-local page = venyx:addPage("Dribbles", 5012544693)
-local section3 = page:addSection("Keybinds")
-
-section3:addKeybind("Right Hesi Spin", Enum.KeyCode.Clear, function()
-    local ohString1 = "Dribble Move"
+RageMain:AddDivider("Main");
+RageMain:AddBind({text = "Right Hesi Spin", flag = "dribble1", nomouse = true, key = "End", callback = function()
+	local ohString1 = "Dribble Move"
     local ohString2 = "CV"
     game:GetService("ReplicatedStorage").GameEvents.ClientAction:FireServer(ohString1, ohString2)
     wait(.5)
     local ohString1 = "Dribble Move"
     local ohString2 = "CXZ"
     game:GetService("ReplicatedStorage").GameEvents.ClientAction:FireServer(ohString1, ohString2)
-end)
-
-section3:addKeybind("Left Hesi Spin", Enum.KeyCode.Clear, function()
+end});
+RageMain:AddBind({text = "Left Hesi Spin", flag = "dribble2", nomouse = true, key = "End", callback = function()
 	local ohString1 = "Dribble Move"
 	local ohString2 = "ZV"
 	game:GetService("ReplicatedStorage").GameEvents.ClientAction:FireServer(ohString1, ohString2)
@@ -140,9 +119,8 @@ section3:addKeybind("Left Hesi Spin", Enum.KeyCode.Clear, function()
 	local ohString1 = "Dribble Move"
 	local ohString2 = "ZXC"
 	game:GetService("ReplicatedStorage").GameEvents.ClientAction:FireServer(ohString1, ohString2)
-end)
-
-section3:addKeybind("Right Cross Spin", Enum.KeyCode.Clear, function()
+end});
+RageMain:AddBind({text = "Right Double Cross Spin", flag = "dribble3", nomouse = true, key = "End", callback = function()
 	local ohString1 = "Dribble Move"
 	local ohString2 = "CC"
 	game:GetService("ReplicatedStorage").GameEvents.ClientAction:FireServer(ohString1, ohString2)
@@ -150,9 +128,8 @@ section3:addKeybind("Right Cross Spin", Enum.KeyCode.Clear, function()
 	local ohString1 = "Dribble Move"
 	local ohString2 = "CXZ"
 	game:GetService("ReplicatedStorage").GameEvents.ClientAction:FireServer(ohString1, ohString2)
-end)
-
-section3:addKeybind("LeftCross Spin", Enum.KeyCode.Clear, function()
+end});
+RageMain:AddBind({text = "Left Double Cross Spin", flag = "dribble4", nomouse = true, key = "End", callback = function()
 	local ohString1 = "Dribble Move"
 	local ohString2 = "ZZ"
 	game:GetService("ReplicatedStorage").GameEvents.ClientAction:FireServer(ohString1, ohString2)
@@ -160,9 +137,8 @@ section3:addKeybind("LeftCross Spin", Enum.KeyCode.Clear, function()
 	local ohString1 = "Dribble Move"
 	local ohString2 = "ZXC"
 	game:GetService("ReplicatedStorage").GameEvents.ClientAction:FireServer(ohString1, ohString2)
-end)
-
-section3:addKeybind("Right Behind cross", Enum.KeyCode.Clear, function()
+end});
+RageMain:AddBind({text = "Right Behind cross", flag = "dribble5", nomouse = true, key = "End", callback = function()
 	local ohString1 = "Dribble Move"
 	local ohString2 = "CX"
 	game:GetService("ReplicatedStorage").GameEvents.ClientAction:FireServer(ohString1, ohString2)
@@ -170,9 +146,8 @@ section3:addKeybind("Right Behind cross", Enum.KeyCode.Clear, function()
 	local ohString1 = "Dribble Move"
 	local ohString2 = "C"
 	game:GetService("ReplicatedStorage").GameEvents.ClientAction:FireServer(ohString1, ohString2)
-end)
-
-section3:addKeybind("Left Behind cross", Enum.KeyCode.Clear, function()
+end});
+RageMain:AddBind({text = "Left Behind cross", flag = "dribble6", nomouse = true, key = "End", callback = function()
 	local ohString1 = "Dribble Move"
 	local ohString2 = "ZX"
 	game:GetService("ReplicatedStorage").GameEvents.ClientAction:FireServer(ohString1, ohString2)
@@ -180,9 +155,8 @@ section3:addKeybind("Left Behind cross", Enum.KeyCode.Clear, function()
 	local ohString1 = "Dribble Move"
 	local ohString2 = "Z"
 	game:GetService("ReplicatedStorage").GameEvents.ClientAction:FireServer(ohString1, ohString2)
-end)
-
-section3:addKeybind("Right cross between", Enum.KeyCode.Clear, function()
+end});
+RageMain:AddBind({text = "Right cross between", flag = "dribble7", nomouse = true, key = "End", callback = function()
 	local ohString1 = "Dribble Move"
 	local ohString2 = "Z"
 	game:GetService("ReplicatedStorage").GameEvents.ClientAction:FireServer(ohString1, ohString2)
@@ -190,9 +164,8 @@ section3:addKeybind("Right cross between", Enum.KeyCode.Clear, function()
 	local ohString1 = "Dribble Move"
 	local ohString2 = "VX"
 	game:GetService("ReplicatedStorage").GameEvents.ClientAction:FireServer(ohString1, ohString2)
-end)
-
-section3:addKeybind("Left cross between", Enum.KeyCode.Clear, function()
+end});
+RageMain:AddBind({text = "Left cross between", flag = "dribble8", nomouse = true, key = "End", callback = function()
 	local ohString1 = "Dribble Move"
 	local ohString2 = "C"
 	game:GetService("ReplicatedStorage").GameEvents.ClientAction:FireServer(ohString1, ohString2)
@@ -200,9 +173,8 @@ section3:addKeybind("Left cross between", Enum.KeyCode.Clear, function()
 	local ohString1 = "Dribble Move"
 	local ohString2 = "VX"
 	game:GetService("ReplicatedStorage").GameEvents.ClientAction:FireServer(ohString1, ohString2)
-end)
-
-section3:addKeybind("Right Double cross Snatch", Enum.KeyCode.Clear, function()
+end});
+RageMain:AddBind({text = "Right Double cross Snatch", flag = "dribble9", nomouse = true, key = "End", callback = function()
 	local ohString1 = "Dribble Move"
 	local ohString2 = "CC"
 	game:GetService("ReplicatedStorage").GameEvents.ClientAction:FireServer(ohString1, ohString2)
@@ -210,9 +182,8 @@ section3:addKeybind("Right Double cross Snatch", Enum.KeyCode.Clear, function()
 	local ohString1 = "Dribble Move"
 	local ohString2 = "XX"
 	game:GetService("ReplicatedStorage").GameEvents.ClientAction:FireServer(ohString1, ohString2)
-end)
-
-section3:addKeybind("Left Double cross Snatch", Enum.KeyCode.Clear, function()
+end});
+RageMain:AddBind({text = "Left Double cross Snatch", flag = "dribble10", nomouse = true, key = "End", callback = function()
 	local ohString1 = "Dribble Move"
 	local ohString2 = "ZZ"
 	game:GetService("ReplicatedStorage").GameEvents.ClientAction:FireServer(ohString1, ohString2)
@@ -220,26 +191,15 @@ section3:addKeybind("Left Double cross Snatch", Enum.KeyCode.Clear, function()
 	local ohString1 = "Dribble Move"
 	local ohString2 = "XX"
 	game:GetService("ReplicatedStorage").GameEvents.ClientAction:FireServer(ohString1, ohString2)
-end)
+end});
 
-local page = venyx:addPage("Misc", 5012544693)
-local section4 = page:addSection("Misc")
+-- [Visuals Tab UI] ------------------------------------------------------------------------------------------------------------------------------------------------------------
+local VisualsTab = library:AddTab("Misc"); 
+local VisualsColunm1 = VisualsTab:AddColumn();
+local VisualsMain = VisualsColunm1:AddSection("Misc")
 
-section4:addButton("Server hop", function()
-    local x = {}
-	for _, v in ipairs(game:GetService("HttpService"):JSONDecode(game:HttpGetAsync("https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?sortOrder=Asc&limit=100")).data) do
-	if type(v) == "table" and v.maxPlayers > v.playing and v.id ~= game.JobId then
-	x[#x + 1] = v.id
-	end
-	end
-	if #x > 0 then
-	game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, x[math.random(1, #x)])
-	else
-	return notify("Serverhop","Couldn't find a server.")
-	end
-end)
-
-section4:addButton("Fps Boost", function()
+VisualsMain:AddDivider("Main");
+VisualsMain:AddButton({text = "Fps Boost", callback = function()
     if game:GetService("Workspace"):FindFirstChild("Arena") then
         game:GetService("Workspace").Arena:Destroy()
     else
@@ -252,35 +212,128 @@ end
 		game:GetService("Lighting").FogEnd = 100000
 		game:GetService("Lighting").GlobalShadows = false
 		game:GetService("Lighting").OutdoorAmbient = Color3.fromRGB(128, 128, 128)
-end)
+end});
+VisualsMain:AddButton({text = "Server hop", callback = function()
+    local x = {}
+	for _, v in ipairs(game:GetService("HttpService"):JSONDecode(game:HttpGetAsync("https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?sortOrder=Asc&limit=100")).data) do
+	if type(v) == "table" and v.maxPlayers > v.playing and v.id ~= game.JobId then
+	x[#x + 1] = v.id
+	end
+	end
+	if #x > 0 then
+	game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, x[math.random(1, #x)])
+	else
+	return notify("Serverhop","Couldn't find a server.")
+	end
+end});
 
-local page = venyx:addPage("Settings", 5012544693)
-local section5 = page:addSection("Credits and other")
+-- [Library Settings UI] -----------------------------------------------------------------------------------------------------------------------------------------------------
+local SettingsTab = library:AddTab("Settings"); 
+local SettingsColumn = SettingsTab:AddColumn(); 
+local SettingsColumn2 = SettingsTab:AddColumn(); 
+local SettingSection = SettingsColumn:AddSection("Menu"); 
+local ConfigSection = SettingsColumn2:AddSection("Configs");
+local Warning = library:AddWarning({type = "confirm"});
 
-section5:addButton("Copy discord inv", function()
-    setclipboard("https://discord.gg/rZwYMJnSau")
-end)
+SettingSection:AddBind({text = "Open / Close", flag = "UI Toggle", nomouse = true, key = "End", callback = function()
+    library:Close();
+end});
 
-section5:addButton("Made by BigBootyBandit#3102", function()
-    setclipboard("BigBootyBandit#3102")
-end)
+SettingSection:AddColor({text = "Accent Color", flag = "Menu Accent Color", color = Color3.new(0.599623620510101318359375, 0.447115242481231689453125, 0.97174417972564697265625), callback = function(color)
+    if library.currentTab then
+        library.currentTab.button.TextColor3 = color;
+    end
+    for i,v in pairs(library.theme) do
+        v[(v.ClassName == "TextLabel" and "TextColor3") or (v.ClassName == "ImageLabel" and "ImageColor3") or "BackgroundColor3"] = color;
+    end
+end});
 
-section5:addKeybind("Toggle Keybind", Enum.KeyCode.RightControl, function()
-    print("Activated Keybind")
-    venyx:toggle()
-    end, function()
-    print("Changed Keybind")
-end)
+-- [Background List]
+local backgroundlist = {
+    Floral = "rbxassetid://5553946656",
+    Flowers = "rbxassetid://6071575925",
+    Circles = "rbxassetid://6071579801",
+    Hearts = "rbxassetid://6073763717"
+};
 
--- second page
-local theme = venyx:addPage("Theme", 5012544693)
-local colors = theme:addSection("Colors")
+-- [Background List]
+local back = SettingSection:AddList({text = "Background", max = 4, flag = "background", values = {"Floral", "Flowers", "Circles", "Hearts"}, value = "Floral", callback = function(v)
+    if library.main then
+        library.main.Image = backgroundlist[v];
+    end
+end});
 
-for theme, color in pairs(themes) do -- all in one theme changer, i know, im cool
-colors:addColorPicker(theme, color, function(color3)
-venyx:setTheme(theme, color3)
-end)
-end
+-- [Background Color Picker]
+back:AddColor({flag = "backgroundcolor", color = Color3.new(), callback = function(color)
+    if library.main then
+        library.main.ImageColor3 = color;
+    end
+end, trans = 1, calltrans = function(trans)
+    if library.main then
+        library.main.ImageTransparency = 1 - trans;
+    end
+end});
 
--- load
-venyx:SelectPage(venyx.pages[1], true)
+-- [Tile Size Slider]
+SettingSection:AddSlider({text = "Tile Size", min = 50, max = 500, value = 50, callback = function(size)
+    if library.main then
+        library.main.TileSize = UDim2.new(0, size, 0, size);
+    end
+end});
+
+-- [Discord Button]
+SettingSection:AddButton({text = "Copy discord invite", callback = function()
+	setclipboard("https://discord.gg/rZwYMJnSau")
+end});
+
+SettingSection:AddButton({text = "made by BigBootyBandit#3102", callback = function()
+	setclipboard("BigBootyBandit#3102")
+end});
+
+-- [Config Box]
+ConfigSection:AddBox({text = "Config Name", skipflag = true});
+
+-- [Config List]
+ConfigSection:AddList({text = "Configs", skipflag = true, value = "", flag = "Config List", values = library:GetConfigs()});
+
+-- [Create Button]
+ConfigSection:AddButton({text = "Create", callback = function()
+    library:GetConfigs();
+    writefile(library.foldername .. "/" .. library.flags["Config Name"] .. library.fileext, "{}");
+    library.options["Config List"]:AddValue(library.flags["Config Name"]);
+end});
+
+-- [Save Button]
+ConfigSection:AddButton({text = "Save", callback = function()
+    local r, g, b = library.round(library.flags["Menu Accent Color"]);
+    Warning.text = "Are you sure you want to save the current settings to config <font color='rgb(" .. r .. "," .. g .. "," .. b .. ")'>" .. library.flags["Config List"] .. "</font>?";
+    if Warning:Show() then
+        library:SaveConfig(library.flags["Config List"]);
+    end
+end});
+
+-- [Load Button]
+ConfigSection:AddButton({text = "Load", callback = function()
+    local r, g, b = library.round(library.flags["Menu Accent Color"]);
+    Warning.text = "Are you sure you want to load config <font color='rgb(" .. r .. "," .. g .. "," .. b .. ")'>" .. library.flags["Config List"] .. "</font>?";
+    if Warning:Show() then
+        library:LoadConfig(library.flags["Config List"]);
+    end
+end});
+
+-- [Delete Button]
+ConfigSection:AddButton({text = "Delete", callback = function()
+    local r, g, b = library.round(library.flags["Menu Accent Color"]);
+    Warning.text = "Are you sure you want to delete config <font color='rgb(" .. r .. "," .. g .. "," .. b .. ")'>" .. library.flags["Config List"] .. "</font>?";
+    if Warning:Show() then
+        local config = library.flags["Config List"];
+        if table.find(library:GetConfigs(), config) and isfile(library.foldername .. "/" .. config .. library.fileext) then
+            library.options["Config List"]:RemoveValue(config);
+            delfile(library.foldername .. "/" .. config .. library.fileext);
+        end
+    end
+end});
+
+-- [Init] --------------------------------------------------------------------------------------------------------------------------------------------------------------------
+library:Init();
+library:selectTab(library.tabs[1]);
