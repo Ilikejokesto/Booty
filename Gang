@@ -216,8 +216,6 @@ VisualsMain:AddButton({text = "Fps Boost", callback = function()
 	end
 end
 end
-end
-end
 		game:GetService("Lighting").Brightness = 2
 		game:GetService("Lighting").ClockTime = 14
 		game:GetService("Lighting").FogEnd = 100000
